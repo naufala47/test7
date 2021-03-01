@@ -11,7 +11,9 @@ const lstKategori = [
     { label: 'Izin Sakit', value: 'Sakit' },
     { label: 'Izin Anak Sakit', value: 'anakSakit' }
 ]
-const Ijin = () => {
+const Ijin = ({ navigation, route }) => {
+    const { dataID } = route.params;
+    const [name, setName] = useState(dataID)
     const [kategori, setKategori] = useState(0)
     const [tanggalA, setTanggalA] = useState("2021-01-01")
     const [tanggalB, setTanggalB] = useState("2021-01-01")
@@ -32,6 +34,7 @@ const Ijin = () => {
         firestore()
             .collection('Ijin')
             .add({
+                email: name,
                 kategori: lstKategori[lstKategori.row],
                 tanggalA: tanggalA,
                 tanggalB: tanggalB,

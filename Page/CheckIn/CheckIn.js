@@ -13,7 +13,7 @@ var date = new Date().getDate(); //To get the Current Date
 
 const CheckIn = ({ route, navigation }) => {
     const { dataID } = route.params;
-    const [names, setNames] = useState(dataID)
+    const [name, setName] = useState(dataID)
     const [gambar, setGambar] = useState("")
     const [jamMasuk, setJamMasuk] = useState("")
     const [jamPulang, setJamPulang] = useState("")
@@ -40,7 +40,7 @@ const CheckIn = ({ route, navigation }) => {
                 .then(() => {
                     Alert.alert("Berhasil CheckIn", ` ${gps}`)
                     // this.props.navigation.navigate("Dashboard")
-                    navigation.goBack();
+                    navigation.navigate("Dashboard", { dataID: name });
                 });
 
         });
@@ -51,6 +51,7 @@ const CheckIn = ({ route, navigation }) => {
         firestore()
             .collection('Checkin')
             .add({
+                email: name,
                 gambar: downloadData,
                 namaGambar: namaGambar,
                 gps: gps,

@@ -35,9 +35,7 @@ const Dashboard = ({ navigation, route }) => {
             case "checkIn":
                 console.log("ingfo")
                 navigation.navigate("CheckIn", {
-                    dataID: name,
-                    dataGambar: item.namaGambar,
-                    urlGambar: item.gambar,
+                    dataID: name
                 })
                 break;
 
@@ -50,12 +48,16 @@ const Dashboard = ({ navigation, route }) => {
 
             case "Ijin":
                 console.log("ingfo3")
-                navigation.navigate("Ijin")
+                navigation.navigate("Ijin", {
+                    dataID: name
+                })
                 break;
 
             case "History":
                 console.log("ingfo4")
-                navigation.navigate("History")
+                navigation.navigate("History", {
+                    dataID: name
+                })
                 break;
 
             case "Logout":
