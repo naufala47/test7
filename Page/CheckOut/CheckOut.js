@@ -4,6 +4,7 @@ import { RNCamera } from 'react-native-camera';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import styles from './style';
 
 let camera = null
 let hours = new Date().getHours(); //To get the Current Hours
@@ -90,14 +91,16 @@ const CheckOut = ({ route, navigation }) => {
     };
 
     return (
-        <ScrollView>
+        <ScrollView
+            style={{ flex: 1, width: '100%' }}
+        >
             <View>
                 <RNCamera
                     ref={ref => {
                         camera = ref;
                     }}
                     style={{ flex: 0, flexDirection: 'row', justifyContent: 'center', height: 400, width: 360 }}
-                    type={RNCamera.Constants.Type.back}
+                    type={RNCamera.Constants.Type.front}
                     flashMode={RNCamera.Constants.FlashMode.on}
                     androidCameraPermissionOptions={{
                         title: 'Permission to use camera',
@@ -127,6 +130,7 @@ const CheckOut = ({ route, navigation }) => {
             </View>
             <View>
                 <TouchableOpacity
+                    style={styles.button}
                     onPress={() => takePicture()}>
                     <Text style={{
                         color: '#0f0f0f',
@@ -136,6 +140,7 @@ const CheckOut = ({ route, navigation }) => {
                     }}>Ambil Foto</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    style={styles.buttonFoto}
                     onPress={() => updateData()}>
                     <Text style={{
                         color: '#0f0f0f',

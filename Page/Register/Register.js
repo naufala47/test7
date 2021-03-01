@@ -1,43 +1,51 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import firestore from '@react-native-firebase/firestore';
+import styles from './style';
 
-class Register extends Component {
-    constructor(props) {
-        super(props);
+const Register = ({ navigation }) => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [repassword, setRepassword] = useState("")
+    // constructor(props) {
+    //     super(props);
 
-        this.state = {
-            name: "",
-            email: "",
-            password: "",
-            repassword: ""
-        }
-    }
+    //     this.state = {
+    //         name: "",
+    //         email: "",
+    //         password: "",
+    //         repassword: ""
+    //     }
+    // }
 
-    registerUser = () => {
+    const registerUser = () => {
         console.log("test regist")
         auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .createUserWithEmailAndPassword(email, password)
             .then((respose) => {
                 console.log('user dibuat!');
                 console.log("response" + respose)
 
                 firestore()
                     .collection('users')
-                    .doc(this.state.email)
+                    .doc(email)
                     .set({
-                        name: this.state.name,
-                        email: this.state.email
+                        name: name,
+                        email: email
                     })
                     .then(() => {
-                        this.props.navigation.navigate("Dashboard")
+                        Alert.alert("Anda Karyawan!")
+                        navigation.navigate("Login", {
+                            dataID: email
+                        })
                         console.log('user ditambahkan!');
                     })
                     .catch((error) => {
-                        Alert.alert("Berhasil!")
-                        this.props.navigation.navigate("Login")
+                        Alert.alert("F!")
+                        navigation.navigate("Login")
                     });
                 navigation.goBack();
             })
@@ -53,35 +61,42 @@ class Register extends Component {
 
     }
 
-    render() {
-        return (
-            <View>
-                <KeyboardAwareScrollView>
-                    <TextInput
-                        placeholder='nama'
-                        onChangeText={(name) => this.setState({ name: name })}
-                    />
-                    <TextInput
-                        placeholder='email'
-                        onChangeText={(email) => this.setState({ email: email })}
-                    />
-                    <TextInput
-                        placeholder='password'
-                        secureTextEntry
-                        onChangeText={(password) => this.setState({ password: password })}
-                    />
-                    <TextInput
-                        placeholder='repassword'
-                        secureTextEntry
-                        onChangeText={(repassword) => this.setState({ repassword: repassword })}
-                    />
-                    <TouchableOpacity onPress={this.registerUser}>
-                        <Text>Register</Text>
-                    </TouchableOpacity>
-                </KeyboardAwareScrollView>
-            </View>
-        );
-    }
+    return (
+        <View style={styles.container}>
+            <KeyboardAwareScrollView
+                style={{ flex: 1, width: '100%' }}
+                keyboardShouldPersistTaps="always">
+                <TextInput
+                    style={styles.input}
+                    placeholder='nama'
+                    onChangeText={(txtName) => setName(txtName)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder='email'
+                    onChangeText={(txtEmail) => setEmail(txtEmail)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder='password'
+                    secureTextEntry
+                    onChangeText={(txtPassword) => setPassword(txtPassword)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder='repassword'
+                    secureTextEntry
+                    onChangeText={(txtRepassword) => setRepassword(txtRepassword)}
+                />
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => registerUser()}>
+                    <Text style={styles.buttonTitle}>Register</Text>
+                </TouchableOpacity>
+            </KeyboardAwareScrollView>
+        </View>
+    );
 }
+
 
 export default Register;

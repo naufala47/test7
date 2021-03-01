@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import DatePicker from 'react-native-datepicker';
 import DocumentPicker from 'react-native-document-picker';
 import firestore from '@react-native-firebase/firestore';
+import styles from './style';
 
 const lstKategori = [
     { label: 'Izin Sakit', value: 'Sakit' },
@@ -72,14 +73,16 @@ const Ijin = () => {
     }
 
     return (
-        <View>
-            <KeyboardAwareScrollView>
+        <View style={styles.container}>
+            <KeyboardAwareScrollView
+                style={{ flex: 1, width: '100%' }}
+                keyboardShouldPersistTaps="always">
                 <View>
-                    <Text>Kategori</Text>
+                    <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }}>Kategori</Text>
                 </View>
                 <DropDownPicker
                     items={lstKategori}
-                    containerStyle={{ height: 40 }}
+                    containerStyle={{ height: 40, width: 300, marginLeft: 30 }}
                     style={{ backgroundColor: '#fafafa' }}
                     itemStyle={{
                         justifyContent: 'flex-start'
@@ -88,10 +91,13 @@ const Ijin = () => {
                     onChangeItem={lstKategori => setKategori(lstKategori.kategori)}
                 />
                 <View>
-                    <Text>Dari Tanggal</Text>
+                    <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }}>Dari Tanggal</Text>
                 </View>
                 <DatePicker
-                    style={{ width: 200 }}
+                    style={{
+                        width: 300,
+                        marginLeft: 25
+                    }}
                     date={tanggalA}
                     mode="date"
                     placeholder="select date"
@@ -115,10 +121,13 @@ const Ijin = () => {
                     onDateChange={txtTanggalA => setTanggalA(txtTanggalA)}
                 />
                 <View>
-                    <Text>Sampai Tanggal</Text>
+                    <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }}>Sampai Tanggal</Text>
                 </View>
                 <DatePicker
-                    style={{ width: 200 }}
+                    style={{
+                        width: 300,
+                        marginLeft: 25
+                    }}
                     date={tanggalB}
                     mode="date"
                     placeholder="select date"
@@ -142,29 +151,32 @@ const Ijin = () => {
                     onDateChange={txtTanggalB => setTanggalB(txtTanggalB)}
                 />
                 <View>
-                    <Text>Perihal</Text>
+                    <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }}>Perihal</Text>
                 </View>
                 <TextInput
+                    style={styles.input}
                     placeholder='Perihal'
                     value={perihal}
                     onChangeText={txtPerihal => setPerihal(txtPerihal)}
                 />
                 <View>
-                    <Text>Keterangan</Text>
+                    <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }}>Keterangan</Text>
                 </View>
                 <TextInput
+                    style={styles.input}
                     placeholder='Keterangan'
                     value={keterangan}
                     onChangeText={txtKeterangan => setKeterangan(txtKeterangan)}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonFoto}
+                    onPress={ambilFile}>
                     <Text
-                        onPress={ambilFile}
-                    >
+                        style={styles.buttonTitle}>
                         Lampiran
                     </Text>
                 </TouchableOpacity>
-                <Text >
+                <Text style={{ marginLeft: 25, marginBottom: 5, marginTop: 5 }} >
                     File Name: {singleFile.name ? singleFile.name : ''}
                     {'\n'}
                      Type: {singleFile.type ? singleFile.type : ''}
@@ -175,8 +187,9 @@ const Ijin = () => {
                     {'\n'}
                 </Text>
                 <TouchableOpacity
+                    style={styles.button}
                     onPress={() => saveData()}>
-                    <Text>Kirim</Text>
+                    <Text style={styles.buttonTitle}>Kirim</Text>
                 </TouchableOpacity>
             </KeyboardAwareScrollView>
         </View>

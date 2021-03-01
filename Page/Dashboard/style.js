@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default styles = StyleSheet.create({
+export default stylee = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 20,
@@ -19,6 +19,7 @@ export default styles = StyleSheet.create({
     listContainer: {
         alignItems: 'center'
     },
+
     /******** card **************/
     card: {
         shadowColor: '#00000021',
